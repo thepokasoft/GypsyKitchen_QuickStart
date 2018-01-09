@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Gypsy Kitchen</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<style>
+	table {
+	    border-collapse: collapse;
+	}
+	
+	table, th, td {
+	    border: 1px solid black;
+	}
+	</style>
+</head>
+<body>
+	<h3>Menu Card</h3>
+	
+	<br></br>
+	 <form action="#" th:action="@{addProduct}" th:object="${product}" 
+         style="width:800px; margin:0 auto;" method="post">
+    	<p><input type="hidden" th:field="*{id}" /></p>
+        <p>Product Name: <input type="text" th:field="*{name}" /></p>
+        <p>Product Price: <input type="number" th:field="*{price}" /></p>
+        <p>
+        	<input type="submit" value="Submit" />
+         	<input type="reset" value="Reset" />
+        </p>
+    </form>  
+    
+    
+	<br></br>
+	<div style="width:800px; margin:0 auto;">
+	<table style="width:800px">
+	  <thead>
+	    <tr>
+	      <th>Product No</th>
+	      <th>Product</th>
+	      <th>Price</th>
+	      <th>Modify</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr th:each="prod: ${allProducts}">
+	      <td th:text="${prod.id}"></td>
+	      <td th:text="${prod.name}"></td>
+	      <td th:text="${prod.price}"></td>
+ 	      <td>
+<!-- 	      	<a th:href="${prod.productID}">Delete</a> -->
+	      	<a th:href="@{editProduct-{id}(id=${prod.id})}">Edit</a>
+	      </td>
+	    </tr>
+	  </tbody>
+	</table>
+	</div>
+			<div style="width:800px; margin:0 auto;">
+       <p> 
+        <select th:field="${product.id}">
+    		<option value="0"> select product</option>
+    		<option th:each="prod: ${allProducts}" th:value="${prod.id}" th:text="${prod.name}"></option>
+    	</select>
+    	</p>
+	</div>
+</body>
+</html>
+
+<!-- https://progressive-code.com/post/10/Simple-Spring-Boot-CRUD-application-with-Thymeleaf,-JPA-and-Bootstrap -->

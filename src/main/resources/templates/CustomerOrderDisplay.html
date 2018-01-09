@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Gypsy Kitchen</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style>
+table {
+	border-collapse: collapse;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+</style>
+</head>
+<body>
+	<h3>Display Customer Orders</h3>
+
+	<br></br>
+
+	<br></br>
+	<div style="width: 800px; margin: 0 auto;">
+		
+					<table style="width: 800px">
+						<thead>
+							<tr>
+								<th>Order No</th>
+								<th>Customer ID</th>
+								<th>Status</th>
+								<th>Price</th>
+								<th>Paid</th>
+								<th>Time</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="cOrder: ${allOrders}">
+								<td th:text="${cOrder.id}"></td>
+								<td th:text="${cOrder.customerid}"></td>
+								<td><a th:text="${cOrder.status}" th:href="@{finishOrder-{id}(id=${cOrder.id})}"></a></td>
+								<td th:text="${cOrder.price}"></td>
+								<td><a th:text="${cOrder.paid}"  th:href="@{paidOrder-{id}(id=${cOrder.id})}"></a></td>
+								<td th:text="${cOrder.ordertime}"></td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<div>
+					<a th:href="@{takeorder}"> Take New Order</a>
+					</div>
+	</div>
+</body>
+</html>
+
+<!-- https://progressive-code.com/post/10/Simple-Spring-Boot-CRUD-application-with-Thymeleaf,-JPA-and-Bootstrap -->

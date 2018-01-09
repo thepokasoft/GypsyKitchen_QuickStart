@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Gypsy Kitchen</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style>
+table {
+	border-collapse: solid;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+</style>
+</head>
+<body>
+	<h3>Take New Order</h3>
+
+	<br></br>
+	<form action="#" th:action="@{saveorder}"
+		style="width: 800px; margin: 0 auto;" method="post">
+		<p>
+			Customer Name: <input type="text" th:field="${customer.name}" />
+		</p>
+		<p>
+			Customer Email: <input type="text" th:field="${customer.email}" />
+		</p>
+		<p>
+			Customer Phone: <input type="text" th:field="${customer.phone}" />
+		</p>
+		<hr />
+		<table>
+			<thead>
+				<tr>
+					<th>S No</th>
+					<th>Product</th>
+					<th>Quantity</th>
+					<th><button type="submit" name="addRow">Add row</button></th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="oli,	rowStat : ${olim.olis}">
+					<td th:field="${rowStat.count}">1</td>
+					<td><select th:field="${olim.olis[__${rowStat.index}__].productid}">
+							<option value="0">select product</option>
+							<option th:each="prod: ${allProducts}" th:value="${prod.id}"
+								th:text="${prod.name}"></option>
+					</select></td>
+					<td><input type="text"
+						th:field="${olim.olis[__${rowStat.index}__].quantity}" /></td>
+					<td>
+						<button type="submit" name="removeRow" th:value="${rowStat.index}">Remove
+							row</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p>
+			<input type="submit" value="Submit" name="save" /> <input
+				type="reset" value="Reset" />
+		</p>
+	</form>
+
+
+	<br></br>
+	<div style="width: 800px; margin: 0 auto;"></div>
+</body>
+</html>
+
+<!-- https://progressive-code.com/post/10/Simple-Spring-Boot-CRUD-application-with-Thymeleaf,-JPA-and-Bootstrap -->
+<!-- http://www.thymeleaf.org/doc/tutorials/2.1/thymeleafspring.html#dynamic-fields -->
+<!-- https://www.bincsoft.com/blog/thymeleaf-and-lists-in-forms/ -->
+<!-- http://forum.thymeleaf.org/I-have-problem-in-binding-the-list-of-objects-contained-inside-a-object-on-the-form-using-thymeleaf-td3525038.html -->
+<!-- Multiple row submit  -->
