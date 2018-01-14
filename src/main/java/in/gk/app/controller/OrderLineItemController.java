@@ -28,7 +28,7 @@ public class OrderLineItemController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getLineItems(Map<String, Object> model) {
 		
-		List<Object[]> objects = customerOrderService.getAll();
+		List<Object[]> objects = customerOrderService.getLineItemsAndAggrigatedQuantity();
 		List<Product> products = new ArrayList<>();
 		
 		Map<String , Long> OrderLineMAp= new HashMap<>();

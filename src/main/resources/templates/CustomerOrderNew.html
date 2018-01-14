@@ -3,6 +3,7 @@
 <head>
 <title>Gypsy Kitchen</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <style>
 table {
 	border-collapse: solid;
@@ -18,9 +19,11 @@ table, th, td {
 
 	<br></br>
 	<form action="#" th:action="@{saveorder}"
-		style="width: 800px; margin: 0 auto;" method="post">
+		style="width: 80%; margin: 0 auto;" method="post">
 		<p>
-			Customer Name: <input type="text" th:field="${customer.name}" />
+			Customer Name: <input type="text" th:field="${customer.name}" /> <span
+				th:if="${#fields.hasErrors('customer.name')}" th:errors="${customer.name}">Name
+				Error</span>
 		</p>
 		<p>
 			Customer Email: <input type="text" th:field="${customer.email}" />
@@ -40,9 +43,10 @@ table, th, td {
 			</thead>
 
 			<tbody>
-				<tr th:each="oli,	rowStat : ${olim.olis}">
-					<td th:field="${rowStat.count}">1</td>
-					<td><select th:field="${olim.olis[__${rowStat.index}__].productid}">
+				<tr th:each="oli,rowStat : ${olim.olis}">
+					<td th:text="${rowStat.count}">1</td>
+					<td><select
+						th:field="${olim.olis[__${rowStat.index}__].productid}">
 							<option value="0">select product</option>
 							<option th:each="prod: ${allProducts}" th:value="${prod.id}"
 								th:text="${prod.name}"></option>
@@ -64,7 +68,6 @@ table, th, td {
 
 
 	<br></br>
-	<div style="width: 800px; margin: 0 auto;"></div>
 </body>
 </html>
 

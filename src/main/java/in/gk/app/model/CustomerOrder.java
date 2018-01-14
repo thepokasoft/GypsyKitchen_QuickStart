@@ -15,8 +15,35 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="customerorder")
-//"ol.id as olid, ol.orderid as olorderid, ol.price as olprice, ol.productid as olproductid, "
-//+ "ol.quantity as olquantity"
+@SqlResultSetMappings(
+		{
+			@SqlResultSetMapping(
+					name = "orderCustomerMapping",
+					entities = {
+							@EntityResult(
+									entityClass = Customer.class,
+									fields = {
+											@FieldResult(name = "id", column = "cid"),
+											@FieldResult(name = "name", column = "cname"),
+											@FieldResult(name = "email", column = "cemail"),
+											@FieldResult(name = "phone", column = "cphone"),
+									}),
+							@EntityResult(
+									entityClass = CustomerOrder.class,
+									fields = {
+											@FieldResult(name = "id", column = "coid"),
+											@FieldResult(name = "customerid", column = "cocustomerid"),
+											@FieldResult(name = "price", column = "coprice"),
+											@FieldResult(name = "paid", column = "copaid"),
+											@FieldResult(name = "ordertime", column = "coordertime"),
+											@FieldResult(name = "orderfinishtime", column = "coorderfinishtime"),
+											@FieldResult(name = "status", column = "costatus"),
+									}),
+							
+							}
+					)
+		})
+				
 public class CustomerOrder {
 
 	@Id
@@ -26,8 +53,15 @@ public class CustomerOrder {
 	Double price;
 	Boolean paid;
 	Date ordertime;
+	Date orderfinishtime;
 	Boolean status;
 	
+	public Date getOrderfinishtime() {
+		return orderfinishtime;
+	}
+	public void setOrderfinishtime(Date orderfinishtime) {
+		this.orderfinishtime = orderfinishtime;
+	}
 	public Integer getCustomerid() {
 		return customerid;
 	}

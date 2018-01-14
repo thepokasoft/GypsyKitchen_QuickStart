@@ -3,6 +3,7 @@
 <head>
 <title>Gypsy Kitchen</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<style>
 	table {
 	    border-collapse: collapse;
@@ -18,7 +19,7 @@
 	
 	<br></br>
 	 <form action="#" th:action="@{addCustomer}" th:object="${customer}" 
-         style="width:800px; margin:0 auto;" method="post">
+         style="width: 80%; margin: 0 auto; method="post">
     	<p><input type="hidden" th:field="*{id}" /></p>
         <p>Customer Name: <input type="text" th:field="*{name}" /></p>
         <p>Customer Email: <input type="text" th:field="*{email}" /></p>
@@ -31,8 +32,8 @@
     
     
 	<br></br>
-	<div style="width:800px; margin:0 auto;">
-	<table style="width:800px">
+	<div style="width:80%; margin:0 auto;">
+	<table style="width:80%">
 	  <thead>
 	    <tr>
 	      <th>Customer ID</th>

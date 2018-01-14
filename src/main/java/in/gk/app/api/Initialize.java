@@ -58,7 +58,7 @@ public class Initialize {
 		
 		customerOrderService.saveOrder(customerOrder, orderLineItems, customer);
 		
-		customerOrderService.getAll();
+		customerOrderService.getLineItemsAndAggrigatedQuantity();
 		
 		return "good";
 		

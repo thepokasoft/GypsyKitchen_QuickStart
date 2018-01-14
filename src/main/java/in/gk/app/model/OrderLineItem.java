@@ -25,7 +25,39 @@ import javax.persistence.Table;
 											@FieldResult(name = "price", column = "price"),
 									}),
 									columns = @ColumnResult(name = "quantity" ,type=Long.class)
-							)
+							),
+			@SqlResultSetMapping(
+					name = "orderItemMapping",
+					entities = {
+							@EntityResult(
+									entityClass = CustomerOrder.class,
+									fields = {
+											@FieldResult(name = "id", column = "coid"),
+											@FieldResult(name = "customerid", column = "cocustomerid"),
+											@FieldResult(name = "price", column = "coprice"),
+											@FieldResult(name = "paid", column = "copaid"),
+											@FieldResult(name = "ordertime", column = "coordertime"),
+											@FieldResult(name = "orderfinishtime", column = "coorderfinishtime"),
+											@FieldResult(name = "status", column = "costatus"),
+									}),
+							@EntityResult(
+									entityClass = OrderLineItem.class,
+									fields = {
+											@FieldResult(name = "id", column = "olid"),
+											@FieldResult(name = "orderid", column = "olorderid"),
+											@FieldResult(name = "price", column = "olprice"),
+											@FieldResult(name = "productid", column = "olproductid"),
+											@FieldResult(name = "quantity", column = "olquantity"),
+									}),
+							@EntityResult(
+									entityClass = Product.class,
+									fields = {
+											@FieldResult(name = "id", column = "pid"),
+											@FieldResult(name = "name", column = "pname"),
+											@FieldResult(name = "price", column = "pprice"),
+									})
+							}
+					)
 		})
 
 public class OrderLineItem {

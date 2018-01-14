@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Gypsy Kitchen</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+table {
+	
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+
+.itemDetails div {
+	margin: 1em;
+	float: inline-start;
+}
+
+.eachItem {
+margin: 1px;
+padding-top :6em;
+	
+}
+
+.itemBlock {
+	border-collapse: collapse;
+	border: solid;
+	margin: 1px;
+}
+</style>
+</head>
+<body>
+	<h3>Display Customer Orders</h3>
+
+	<br></br>
+
+	<br></br>
+	<div style="width: 80%; margin: 0 auto;">
+		<div class="itemBlock" th:each="order : ${orderList}">
+			<div class="itemDetails">
+				<div>
+					Order Number:<span th:text="${order['oid']}">1</span>
+				</div>
+				<div>
+					Customer Name:<span th:text="${order['cname']}">Dhyanesh</span>
+				</div>
+				<div>
+					Order Status:<span th:text="${order['ostatus']}">Not
+						Delivered</span>
+				</div>
+				<div>
+					Total Amount:<span th:text="${order['oprice']}">50.00</span>
+				</div>
+				<div>
+					Paid Status:<span th:text="${order['opaid']}">Paid</span>
+				</div>
+			</div>
+			<div class="eachItem">
+				<ul th:each="item : ${uniqueProduct}">
+					<li th:unless="${#lists.isEmpty(order[__${item.name}__])}"><span
+						th:text="${item.name}"></span><span>&emsp;</span><span
+						th:text="${order[__${item.name}__]}"></span></li>
+				</ul>
+			</div>
+			<div><a th:href="@{editorder-{id}(id=${order['oid']})}">Edit Order</a></div>
+		</div>
+		<hr />
+		<div>
+			<a th:href="@{takeorder}"> Take New Order</a>
+		</div>
+	</div>
+</body>
+</html>
+
+<!-- https://progressive-code.com/post/10/Simple-Spring-Boot-CRUD-application-with-Thymeleaf,-JPA-and-Bootstrap -->
