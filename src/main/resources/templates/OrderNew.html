@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Gypsy Kitchen</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+table {
+	border-collapse: solid;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="wid">
+
+			<h3>Take New Order</h3>
+
+			<br></br>
+			<form action="#" th:action="@{saveorder}" method="post">
+				<p>
+					<input type="hidden" id="customer" th:field="${customer.id}" /> <input
+						type="hidden" id="order" th:field="${order.id}" />
+				</p>
+				<p>
+					Customer Name: <input type="text" th:field="${customer.name}" /> <span
+						th:if="${#fields.hasErrors('customer.name')}"
+						th:errors="${customer.name}">Name Error</span>
+				</p>
+				<p>
+					Customer Email: <input type="text" th:field="${customer.email}" />
+				</p>
+				<p>
+					Customer Phone: <input type="text" th:field="${customer.phone}" />
+				</p>
+				<hr />
+				<table>
+					<thead>
+						<tr>
+							<th>S No</th>
+							<th>Product</th>
+							<th>Quantity</th>
+							<th><button type="submit" name="addItem">Add Item</button></th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr th:each="oli,rowStat : ${olim.olis}">
+							<td><p th:text="${rowStat.count}"></p><p><input type="hidden"
+								id="orderitem" th:field="${olim.olis[__${rowStat.index}__].id}" /></p></td>
+							<td><select
+								th:field="${olim.olis[__${rowStat.index}__].product.id}">
+									<option value="0">select product</option>
+									<option th:each="prod: ${allProducts}" th:value="${prod.id}"
+										th:text="${prod.name}"></option>
+							</select></td>
+							<td><input type="text"
+								th:field="${olim.olis[__${rowStat.index}__].quantity}" /></td>
+							<td>
+								<button type="submit" name="removeItem"
+									th:value="${rowStat.index}">Remove</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<p>
+					<input type="submit" value="Submit" name="save" /> <input
+						type="reset" value="Reset" />
+				</p>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
+
+<!-- https://progressive-code.com/post/10/Simple-Spring-Boot-CRUD-application-with-Thymeleaf,-JPA-and-Bootstrap -->
+<!-- http://www.thymeleaf.org/doc/tutorials/2.1/thymeleafspring.html#dynamic-fields -->
+<!-- https://www.bincsoft.com/blog/thymeleaf-and-lists-in-forms/ -->
+<!-- http://forum.thymeleaf.org/I-have-problem-in-binding-the-list-of-objects-contained-inside-a-object-on-the-form-using-thymeleaf-td3525038.html -->
+<!-- Multiple row submit  -->

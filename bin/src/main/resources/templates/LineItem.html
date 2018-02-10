@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Gypsy Kitchen</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+table {
+	border-collapse: collapse;
+}
+
+table, th, td {
+	border: 1px solid black;
+}
+</style>
+</head>
+<body>
+	<h3>Chef's Order</h3>
+
+	<br></br>
+
+	<br></br>
+	<div style="width: 80%; margin: 0 auto;">
+		<table style="width: 80%">
+			<thead>
+				<tr>
+					<th>Product</th>
+					<th>quantity</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="prod: ${uniqueProduct}">
+					<td th:text="${prod.name}"></td>
+					<td th:text="${OrderLineMAp[__${prod.name}__]}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
+
+<!-- https://progressive-code.com/post/10/Simple-Spring-Boot-CRUD-application-with-Thymeleaf,-JPA-and-Bootstrap -->

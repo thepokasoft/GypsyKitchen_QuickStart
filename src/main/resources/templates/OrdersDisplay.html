@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Gypsy Kitchen</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<!-- jQuery library -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+.itemDetails {
+	margin: 0.5em;
+}
+
+.itemDetails div {
+	margin: 1em;
+}
+
+.eachItem {
+	margin: 1px;
+	padding-top: 1em;
+}
+
+.itemBlock {
+	border-collapse: collapse;
+	border: solid;
+	margin: 1px;
+}
+</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<h3>Display Customer Orders</h3>
+		<div class="col-md-4">
+			<h4>
+				<a th:href="@{order/new}"> Take New Order</a>
+			</h4>
+		</div>
+		<br></br> <br></br>
+		<div style="width: 80%; margin: 0 auto;">
+			<div class="col-md-8 itemBlock" th:each="order : ${allOrders}">
+				<div class=" col-md-4 left itemDetails">
+					<div>
+						Order Number: <span th:text="${order.id}">1</span>
+					</div>
+					<div>
+						Name: <span th:text="${order.customer.name}">Dhyanesh</span>
+					</div>
+					<div>
+						Status: <span><a
+							th:text="${order.status}?'Delivered':'Not Ready'"
+							th:href="@{order/finishOrder-{id}(id=${order.id})}">default</a></span>
+					</div>
+					<div>
+						Total: <span th:text="${order.price}">50.00</span><span>&#8377;</span>
+					</div>
+					<div>
+						Paid: <span><a th:text="${order.paid} ? 'Paid':'Not Paid'"
+							th:href="@{order/paidOrder-{id}(id=${order.id})}">default</a></span>
+					</div>
+					<div>
+						<a th:href="@{order/editorder-{id}(id=${order.id})}">Edit Order</a>
+					</div>
+				</div>
+				<div class="col-md-4 right eachItem">
+					<ul th:each="item : ${order.items}">
+						<li><span th:text="${item.product.name}"></span><span>&emsp;</span><span
+							th:text="${item.quantity}"></span><span>&emsp;</span><span
+							th:text="${item.itemCurrentStatus}"></span></li>
+					</ul>
+				</div>
+				<!-- <div><a th:href="@{editorder-{id}(id=${order['oid']})}">Edit Order</a></div> -->
+			</div>
+			<hr />
+		</div>
+	</div>
+</body>
+</html>
+
+<!-- https://progressive-code.com/post/10/Simple-Spring-Boot-CRUD-application-with-Thymeleaf,-JPA-and-Bootstrap -->

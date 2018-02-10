@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Mon Jan 08 21:09:34 IST 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-0160-d66d-47eb-000008f24920 
+on database directory memory:/home/ash/eclipse-workspace_Gypsy/GypsyKitchen_QuickStart/testdb with class loader sun.misc.Launcher$AppClassLoader@4c12b6 
+Loaded from file:/home/ash/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_144-b01
+user.dir=/home/ash/eclipse-workspace_Gypsy/GypsyKitchen_QuickStart
+os.name=Linux
+os.arch=i386
+os.version=4.4.0-104-generic
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
