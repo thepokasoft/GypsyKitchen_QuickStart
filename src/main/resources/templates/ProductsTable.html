@@ -56,7 +56,7 @@ table, th, td {
 					<td th:text="${prod.id}"></td>
 					<td th:text="${prod.name}"></td>
 					<td th:text="${prod.price}"></td>
-					<td><a th:href="@{product/{id}(id=${prod.id})}">Edit</a></td>
+					<td><a th:href="@{/product/{id}(id=${prod.id})}">Edit</a></td>
 				</tr>
 			</tbody>
 		</table>

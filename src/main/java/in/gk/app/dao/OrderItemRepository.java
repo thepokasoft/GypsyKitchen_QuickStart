@@ -6,4 +6,5 @@ import in.gk.app.model.OrderItem;
 public interface OrderItemRepository extends JpaRepository<OrderItem, Integer>{
 
 	long deleteByOrderId(Integer orderid);
+
 }

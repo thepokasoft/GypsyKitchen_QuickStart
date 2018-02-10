@@ -67,17 +67,17 @@
 							th:href="@{order/paidOrder-{id}(id=${order.id})}">default</a></span>
 					</div>
 					<div>
-						<a th:href="@{order/editorder-{id}(id=${order.id})}">Edit Order</a>
+						<a style ="color:red" th:href="@{order/editorder-{id}(id=${order.id})}">Edit
+							Order</a>
 					</div>
 				</div>
 				<div class="col-md-4 right eachItem">
 					<ul th:each="item : ${order.items}">
-						<li><span th:text="${item.product.name}"></span><span>&emsp;</span><span
-							th:text="${item.quantity}"></span><span>&emsp;</span><span
-							th:text="${item.itemCurrentStatus}"></span></li>
+						<li><span th:text="${item.product.name}"></span><span>&emsp;</span><span style ="color:red"
+							th:text="${item.quantity}"></span><span>&emsp;</span><span><a
+								th:href="@{/item/finish/{id} (id=${item.id})}" th:text="${item.itemCurrentStatus}"></a></span></li>
 					</ul>
 				</div>
-				<!-- <div><a th:href="@{editorder-{id}(id=${order['oid']})}">Edit Order</a></div> -->
 			</div>
 			<hr />
 		</div>

@@ -26,15 +26,12 @@ table, th, td {
 				<tr>
 					<th>Product</th>
 					<th>quantity</th>
-					<th>Status</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="prod: ${uniqueitems}">
 					<td th:text="${prod}"></td>
-					<td th:text="${items[__${prod}__]}"></td>
-					<td><span><a
-							th:href="@{order/finishOrder-{id}(id=${order.id})}">Not Ready</a></span></td>
+					<td th:text="${items['__${prod}__']}"></td>
 				</tr>
 			</tbody>
 		</table>

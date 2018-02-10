@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import in.gk.app.dao.OrderItemRepository;
 import in.gk.app.model.Order;
 import in.gk.app.model.OrderItem;
-import in.gk.app.model.OrderItemList;
 import in.gk.app.model.Product;
 
 @Service
@@ -122,6 +121,15 @@ public class OrderItemService {
 	public Boolean deleteItemsForOrder(Integer orderId) {
 		orderItemRepo.deleteByOrderId(orderId);
 		return true;
+	}
+	
+	public Boolean updateItemStatus(Integer itemId)
+	{
+		OrderItem item = orderItemRepo.getOne(itemId);
+		item.setItemCurrentStatus("Completed");
+		orderItemRepo.save(item);
+		return true;
+		
 	}
 
 }
