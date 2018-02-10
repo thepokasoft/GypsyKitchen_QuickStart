@@ -6,28 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <style>
 table {
-	
+	border-collapse: collapse;
 }
 
 table, th, td {
 	border: 1px solid black;
-}
-
-.itemDetails div {
-	margin: 1em;
-	float: inline-start;
-}
-
-.eachItem {
-margin: 1px;
-padding-top :6em;
-	
-}
-
-.itemBlock {
-	border-collapse: collapse;
-	border: solid;
-	margin: 1px;
 }
 </style>
 </head>
@@ -38,38 +21,35 @@ padding-top :6em;
 
 	<br></br>
 	<div style="width: 80%; margin: 0 auto;">
-		<div class="itemBlock" th:each="order : ${orderList}">
-			<div class="itemDetails">
-				<div>
-					Order Number:<span th:text="${order['oid']}">1</span>
-				</div>
-				<div>
-					Customer Name:<span th:text="${order['cname']}">Dhyanesh</span>
-				</div>
-				<div>
-					Order Status:<span th:text="${order['ostatus']}">Not
-						Delivered</span>
-				</div>
-				<div>
-					Total Amount:<span th:text="${order['oprice']}">50.00</span>
-				</div>
-				<div>
-					Paid Status:<span th:text="${order['opaid']}">Paid</span>
-				</div>
-			</div>
-			<div class="eachItem">
-				<ul th:each="item : ${uniqueProduct}">
-					<li th:unless="${#lists.isEmpty(order[__${item.name}__])}"><span
-						th:text="${item.name}"></span><span>&emsp;</span><span
-						th:text="${order[__${item.name}__]}"></span></li>
-				</ul>
-			</div>
-			<div><a th:href="@{editorder-{id}(id=${order['oid']})}">Edit Order</a></div>
-		</div>
-		<hr />
-		<div>
-			<a th:href="@{takeorder}"> Take New Order</a>
-		</div>
+		
+					<table style="width: 800px">
+						<thead>
+							<tr>
+								<th>Order No</th>
+								<th>Customer Name</th>
+								<th>Status</th>
+								<th>Price</th>
+								<th>Paid</th>
+								<th>Taken Time</th>
+								<th>Finish Time</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="order: ${allOrders}">
+								<td th:text="${order.id}"></td>
+								<td th:text="${order.customer.name}"></td>
+								<td><a th:text="${order.status}?'Delivered':'Not Ready'" th:href="@{finishOrder-{id}(id=${order.id})}"></a></td>
+								<td th:text="${order.price}"></td>
+								<td><a th:text="${order.paid} ? 'Paid':'Not Paid'"  th:href="@{paidOrder-{id}(id=${order.id})}"></a></td>
+								<td th:text="${order.orderstarttime}"></td>
+								<td th:text="${order.orderfinishtime}"></td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<div>
+					<a th:href="@{new}"> Take New Order</a>
+					</div>
 	</div>
 </body>
 </html>
