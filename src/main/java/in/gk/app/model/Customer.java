@@ -48,6 +48,4 @@ public class Customer {
 		return "Customer [id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + "]";
 	}
 	
-	
-	
 }

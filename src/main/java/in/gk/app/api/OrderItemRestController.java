@@ -11,13 +11,13 @@ import in.gk.app.dao.OrderItemRepository;
 import in.gk.app.model.OrderItem;
 
 @RestController
-@RequestMapping(value="/api/orderlitem")
-public class OrderLineItemRestController {
+@RequestMapping(value="/api/item")
+public class OrderItemRestController {
 
 	@Autowired
 	private OrderItemRepository orderLineItemRepo;
 	
-	@GetMapping()
+	@GetMapping("")
 	public List<OrderItem> getOrderLineItem()
 	{
 		return orderLineItemRepo.findAll();

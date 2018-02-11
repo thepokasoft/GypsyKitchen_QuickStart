@@ -5,9 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +14,6 @@ import in.gk.app.dao.OrderRepository;
 import in.gk.app.model.Customer;
 import in.gk.app.model.Order;
 import in.gk.app.model.OrderItem;
-import in.gk.app.model.OrderItemList;
 
 @Service
 public class OrderService {
@@ -32,9 +28,6 @@ public class OrderService {
 	private OrderItemRepository orderLineItemRepo;
 	@Autowired
 	private CustomerRepository customerRepo;
-	@Autowired
-	private EntityManagerFactory entityManagerFactory;
-	private EntityManager session;
 
 	public Iterable<Order> getAllOrders() {
 		return orderRepo.findAll();

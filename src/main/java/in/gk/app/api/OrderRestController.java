@@ -11,8 +11,8 @@ import in.gk.app.dao.OrderRepository;
 import in.gk.app.model.Order;
 
 @RestController
-@RequestMapping(value="/api/customerorder")
-public class CustomerOrderRestController {
+@RequestMapping(value="/api/order")
+public class OrderRestController {
 
 	@Autowired
 	private OrderRepository customerOrderRepo;
@@ -20,7 +20,6 @@ public class CustomerOrderRestController {
 	@GetMapping("")
 	public List<Order> getCustomerOrder()
 	{
-		System.out.println(customerOrderRepo.findAll());
 		return customerOrderRepo.findAll();
 	}
 	

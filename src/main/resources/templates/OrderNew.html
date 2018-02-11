@@ -39,9 +39,8 @@ table, th, td {
 						type="hidden" id="order" th:field="${order.id}" />
 				</p>
 				<p>
-					Customer Name: <input type="text" th:field="${customer.name}" /> <span
-						th:if="${#fields.hasErrors('customer.name')}"
-						th:errors="${customer.name}">Name Error</span>
+					Customer Name: <input type="text" th:field="${customer.name}"
+						required="required" />
 				</p>
 				<p>
 					Customer Email: <input type="text" th:field="${customer.email}" />
@@ -62,16 +61,21 @@ table, th, td {
 
 					<tbody>
 						<tr th:each="oli,rowStat : ${olim.olis}">
-							<td><p th:text="${rowStat.count}"></p><p><input type="hidden"
-								id="orderitem" th:field="${olim.olis[__${rowStat.index}__].id}" /></p></td>
+							<td><p th:text="${rowStat.count}"></p>
+								<p>
+									<input type="hidden" id="orderitem"
+										th:field="${olim.olis[__${rowStat.index}__].id}" />
+								</p></td>
 							<td><select
-								th:field="${olim.olis[__${rowStat.index}__].product.id}">
-									<option value="0">select product</option>
+								th:field="${olim.olis[__${rowStat.index}__].product.id}"
+								required="required">
+									<option value="">select product</option>
 									<option th:each="prod: ${allProducts}" th:value="${prod.id}"
 										th:text="${prod.name}"></option>
 							</select></td>
-							<td><input type="text"
-								th:field="${olim.olis[__${rowStat.index}__].quantity}" /></td>
+							<td><input type="number"
+								th:field="${olim.olis[__${rowStat.index}__].quantity}"
+								required="required" /></td>
 							<td>
 								<button type="submit" name="removeItem"
 									th:value="${rowStat.index}">Remove</button>

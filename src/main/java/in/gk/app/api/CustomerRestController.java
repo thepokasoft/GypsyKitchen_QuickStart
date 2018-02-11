@@ -17,7 +17,7 @@ public class CustomerRestController {
 	@Autowired
 	private CustomerRepository customerRepo;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	public Iterable<Customer> getAllCustomers() {
 		return customerRepo.findAll();
 	}
@@ -27,7 +27,7 @@ public class CustomerRestController {
 		return customerRepo.findOne(Integer.parseInt(customerID));
 	}
 	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST)
 	public Customer saveCustomer(@RequestBody Customer customer) {
 		return customerRepo.save(customer);
 	}
