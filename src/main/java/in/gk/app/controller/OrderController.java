@@ -1,6 +1,5 @@
 package in.gk.app.controller;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import in.gk.app.dao.OrderRepository;
 import in.gk.app.dao.ProductRepository;
 import in.gk.app.model.Customer;
 import in.gk.app.model.Order;
@@ -28,9 +26,6 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
-
-	@Autowired
-	private OrderRepository customerOrderRepo;
 
 	@Autowired
 	private ProductRepository productRepo;
@@ -88,8 +83,14 @@ public class OrderController {
 			return "OrderNew";
 		} else {
 			Map<Integer, Integer> itemsMap = new HashMap<>();
-			for (OrderItem item : olist.getOlis())
-				itemsMap.put(item.getProduct().getId(), item.getQuantity());
+			for (OrderItem item : olist.getOlis()) {
+				if (itemsMap.containsValue(item.getProduct().getId())) {
+					itemsMap.put(item.getProduct().getId(),
+							item.getQuantity() + itemsMap.get(item.getProduct().getId()));
+				} else {
+					itemsMap.put(item.getProduct().getId(), item.getQuantity());
+				}
+			}
 			if (null == order.getId()) {
 				orderService.saveNewOrder(itemsMap, customer);
 			} else {
@@ -101,21 +102,14 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "finishOrder-{id}", method = RequestMethod.GET)
-	public String finishCustomerOrder(@PathVariable("id") int id, Map<String, Object> model) {
-		Order co = customerOrderRepo.findOne(id);
-		co.setStatus(true);
-		co.setOrderfinishtime(new Date());
-		customerOrderRepo.save(co);
-		model.put("allOrders", orderService.getAllOrders());
+	public String finishCustomerOrder(@PathVariable("id") int id) {
+		orderService.updateOrderStatus(id);
 		return "redirect:/order";
 	}
 
 	@RequestMapping(value = "paidOrder-{id}", method = RequestMethod.GET)
-	public String paidCustomerOrder(@PathVariable("id") int id, Map<String, Object> model) {
-		Order co = customerOrderRepo.findOne(id);
-		co.setPaid(true);
-		customerOrderRepo.save(co);
-		model.put("allOrders", orderService.getAllOrders());
+	public String paidCustomerOrder(@PathVariable("id") int id) {
+		orderService.updateOrderPaid(id);
 		return "redirect:/order";
 	}
 

@@ -106,6 +106,31 @@ public class OrderService {
 		orderRepo.save(order);
 		return order;
 	}
+	
+	public Order updateOrderStatus(Integer orderId) {
+		Order order = orderRepo.getOne(orderId);
+		List<OrderItem> items = orderLineItemRepo.findByOrderId(orderId);
+		if(order.getPaid() == false)
+		{
+			return order;
+		}
+		for(OrderItem item : items) {
+			if(item.getItemCurrentStatus() != "Completed") {
+				return order;
+			}
+		}
+		order.setStatus(true);
+		order.setOrderfinishtime(new Date());
+		order = orderRepo.save(order);
+		return order;
+	}
+
+	public Boolean updateOrderPaid(Integer orderId) {
+		Order order = orderRepo.getOne(orderId);
+		order.setPaid(true);
+		orderRepo.save(order);
+		return true;
+	}
 
 }
 /*
