@@ -33,3 +33,7 @@ public class OrderItemController {
 	}
 
 }
+
+//https://stackoverflow.com/questions/13242394/spring-mvc-multiple-modelattribute-on-the-same-form
+
+//http://sinankarakaya.com/2017/02/17/basic-crud-example-using-spring-boot/

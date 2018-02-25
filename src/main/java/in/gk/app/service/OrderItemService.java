@@ -1,6 +1,8 @@
 package in.gk.app.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -108,13 +110,11 @@ public class OrderItemService {
 				+ "Group By pr.name";
 		List<Object[]> results = session.createNativeQuery(query).getResultList();
 		session.close();
-		Map<String,String> itemToProcessMap = new HashMap<>();
+		Map<String, String> itemToProcessMap = new HashMap<>();
 		for (int i = 0; i < results.size(); i++) {
 			itemToProcessMap.put(results.get(i)[0].toString(), results.get(i)[1].toString());
 		}
-
 		return itemToProcessMap;
-
 	}
 
 	@Transactional
@@ -122,14 +122,30 @@ public class OrderItemService {
 		orderItemRepo.deleteByOrderId(orderId);
 		return true;
 	}
-	
-	public Boolean updateItemStatus(Integer itemId)
-	{
+
+	public Boolean updateItemStatus(Integer itemId) {
 		OrderItem item = orderItemRepo.getOne(itemId);
 		item.setItemCurrentStatus("Completed");
 		orderItemRepo.save(item);
 		return true;
-		
+	}
+
+	@SuppressWarnings("unchecked")
+	public Map<String, String> getTotalItemsSold() {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date currentDate = new Date();
+		String date = sdf.format(currentDate).toString() + " 00:00:00.000";
+		session = entityManagerFactory.createEntityManager();
+		String query = "Select pr.name,SUM(ol.quantity) From orderlineitem AS ol INNER JOIN product AS pr ON ol.product_id = pr.id INNER JOIN customerorder as or ON ol.order_id = or.id"
+				+ " Where or.orderfinishtime >'" + date + "'" + " Group By pr.name";
+		List<Object[]> results = session.createNativeQuery(query).getResultList();
+		session.close();
+		Map<String, String> itemToProcessMap = new HashMap<>();
+		for (int i = 0; i < results.size(); i++) {
+			itemToProcessMap.put(results.get(i)[0].toString(), results.get(i)[1].toString());
+		}
+		return itemToProcessMap;
 	}
 
 }

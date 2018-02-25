@@ -1,9 +1,14 @@
 package in.gk.app.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +33,10 @@ public class OrderService {
 	private OrderItemRepository orderLineItemRepo;
 	@Autowired
 	private CustomerRepository customerRepo;
+	@Autowired
+	private EntityManagerFactory entityManagerFactory;
+
+	private EntityManager session;
 
 	public Iterable<Order> getAllOrders() {
 		return orderRepo.findAll();
@@ -106,16 +115,15 @@ public class OrderService {
 		orderRepo.save(order);
 		return order;
 	}
-	
+
 	public Order updateOrderStatus(Integer orderId) {
 		Order order = orderRepo.getOne(orderId);
 		List<OrderItem> items = orderLineItemRepo.findByOrderId(orderId);
-		if(order.getPaid() == false)
-		{
+		if (order.getPaid() == false) {
 			return order;
 		}
-		for(OrderItem item : items) {
-			if(item.getItemCurrentStatus() != "Completed") {
+		for (OrderItem item : items) {
+			if (item.getItemCurrentStatus() != "Completed") {
 				return order;
 			}
 		}
@@ -130,6 +138,26 @@ public class OrderService {
 		order.setPaid(true);
 		orderRepo.save(order);
 		return true;
+	}
+
+	public Double getTotalSaleAmount() {
+		Double total = 0.0;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date currentDate = new Date();
+		String date = sdf.format(currentDate).toString() + " 00:00:00.000";
+		session = entityManagerFactory.createEntityManager();
+		String query = "Select sum(price) From customerorder where orderfinishtime >'" + date + "'";
+		@SuppressWarnings("unchecked")
+		List<Object[]> results = session.createNativeQuery(query).getResultList();
+		session.close();
+
+		Iterator<Object[]> itr = results.iterator();
+		while (itr.hasNext()) {
+			Object obj = itr.next();
+			total = Double.parseDouble(String.valueOf((null == obj) ? 0 : obj));
+		}
+
+		return total;
 	}
 
 }

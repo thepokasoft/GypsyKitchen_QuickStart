@@ -8,6 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "orderlineitem")
 public class OrderItem {
@@ -15,10 +17,12 @@ public class OrderItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Integer id;
+	@JsonIgnore
 	@OneToOne
 	Product product;
 	Integer quantity;
 	Double price;
+	@JsonIgnore
 	@ManyToOne
 	Order order;
 	String itemCurrentStatus;
